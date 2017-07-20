@@ -12,6 +12,8 @@
 *.tgz
 *.xml
 .DS_Store
+*.js
+*.js.map
 .idea
 .project
 .strong-pm
