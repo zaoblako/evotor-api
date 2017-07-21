@@ -1,6 +1,6 @@
 import * as http from "http";
-import config from "./config/config";
-import { ExpressConfig } from "./config/express";
+import config from "./config/Config";
+import {ExpressConfig} from "./config/Express";
 
 const app = new ExpressConfig().config();
 

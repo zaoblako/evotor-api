@@ -16,8 +16,10 @@ export class ExpressConfig {
         }
 
         app.use(logger("dev"));
+
         app.use(bodyParser.json());
         app.use(bodyParser.urlencoded({extended: false}));
+
         app.use(cookieParser());
 
         for (let route of config.globFiles(config.routes)) {
@@ -30,17 +32,21 @@ export class ExpressConfig {
         });
 
         app.use((err: any, req: express.Request, res: express.Response, next): void => {
-            res.status(err.status || 500).render("error", {
-                message: err.message,
-                error: {}
+            res.status(err.status || 500).json({
+                "error": {
+                    message: err.message,
+                    error: {}
+                }
             });
         });
 
-        if (app.get("env") === "development") {
+        if (process.env.NODE_ENV !== "production") {
             app.use((err: Error, req: express.Request, res: express.Response, next): void => {
-                res.status(500).render("error", {
-                    message: err.message,
-                    error: err
+                res.status(500).json({
+                    "error": {
+                        message: err.message,
+                        error: err
+                    }
                 });
             });
         }
