@@ -5,6 +5,7 @@ interface IUser extends mongoose.Document {
     username: string,
     plain: string,
     password: string,
+    accessToken: string,
     hasBilling: boolean,
     token: string
 }

@@ -32,12 +32,12 @@ class UserController {
                 return res.status(404).end();
             }
             else {
-                user.token = uuid();
+                user.accessToken = uuid();
                 user.save().then((user) => {
                     return res.json({
                         userUuid: user.id,
                         hasBilling: false,
-                        token: user.token
+                        token: user.accessToken
                     });
                 }).catch((err) => {
                     return res.send(err);
@@ -115,14 +115,14 @@ class UserController {
 
         let user = {
             _id: req.body.userUuid,
-            token: uuid(),
+            accessToken: uuid(),
             hasBilling: false
         };
 
         UserRepository.create(user).then((created) => {
             return res.json({
                 userUuid: user._id,
-                token: user.token
+                token: user.accessToken
             });
         }).catch((err) => {
 

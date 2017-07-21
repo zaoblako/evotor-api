@@ -29,6 +29,9 @@ class UserSchema {
             },
             token: {
                 type: String
+            },
+            accessToken: {
+                type: String
             }
         });
     }
