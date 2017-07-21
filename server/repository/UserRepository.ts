@@ -1,5 +1,5 @@
-import DataAccess = require('./DataAccess');
-import IUser = require("../models/IUser");
+import {DataAccess} from './DataAccess';
+import {IUser} from "../models/IUser";
 
 let mongoose = DataAccess.mongooseInstance;
 let mongooseConnection = DataAccess.mongooseConnection;
@@ -8,13 +8,31 @@ class UserSchema {
 
     static get schema() {
         return mongoose.Schema({
-            email: {
+            _id: {
                 type: String,
                 required: true
+            },
+            plain: {
+                type: String
+            },
+            username: {
+                type: String
+            },
+            email: {
+                type: String
+            },
+            password: {
+                type: String
+            },
+            hasBilling: {
+                type: Boolean
+            },
+            token: {
+                type: String
             }
         });
     }
 }
 
-let schema = mongooseConnection.model<IUser>("User", UserSchema.schema);
-export = schema;
+let UserRepository = mongooseConnection.model<IUser>("User", UserSchema.schema, 'user');
+export {UserRepository};

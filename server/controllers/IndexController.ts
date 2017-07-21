@@ -1,41 +1,52 @@
 import {Request, Response} from 'express';
-
-import * as  simpleGit from 'simple-git';
-
+import * as simpleGit from 'simple-git';
 import * as moment from 'moment';
 
+import * as winston from 'winston';
+import {Version} from "../config/Version";
 
-export default class IndexController {
+let logger = winston.loggers.get('default');
+let git = simpleGit(__dirname + '/../');
+let versions = require('../../package.json');
+let log;
 
-    protected static versions: any = "";
-    protected static started: any = moment();
-    protected static log: any = "";
+logger.info('API Version: ' + versions.version);
+logger.info('Environment: ' + process.env.NODE_ENV);
 
-    constructor() {
+git.log(function (err, logs) {
+    log = logs;
+});
 
-        let self = this;
-        IndexController.versions = require('../../package.json');
-        let git = simpleGit(__dirname + '/../');
+/**
+ * @class IndexController
+ */
+class IndexController {
 
-        console.log('API Version: ' + IndexController.versions.version);
-        console.log('API Release: ' + IndexController.versions.release);
-        console.log('Environment: ' + process.env.NODE_ENV);
+    /**
+     * Время старта API
+     * @type {moment.Moment}
+     */
+    public static started: any = moment();
 
-        git.log(function (err, logs) {
-            IndexController.log = logs;
-        });
-    }
-
+    /**
+     * Возвращает сведения об API
+     *
+     * @return {Version}
+     * @param {e.Request} req
+     * @param {e.Response} res
+     */
     public static version(req: Request, res: Response): void {
-        if (req.method === 'GET') {
-            res.json({
-                started: IndexController.started.format('DD.MM.YYYY HH:mm:ss'),
-                uptime: moment().diff(IndexController.started, 'minutes'),
-                version: IndexController.versions.version,
-                update: IndexController.log ? moment(IndexController.log.latest.date, 'YYYY-MM-DD hh:mm:ss ZZ').format('DD.MM.YYYY HH:mm:ss') : moment().format('DD.MM.YYYY HH:mm:ss'),
-                updatedBy: IndexController.log ? IndexController.log.latest.author_name : ''
-            });
-        }
+        let versions = require('../../package.json');
 
+        let ApplicationVersion = new Version(IndexController.started.format('DD.MM.YYYY HH:mm:ss'),
+            moment().diff(IndexController.started, 'minutes'),
+            versions.version,
+            (log ? moment(log.latest.date, 'YYYY-MM-DD hh:mm:ss ZZ').format('DD.MM.YYYY HH:mm:ss') : moment().format('DD.MM.YYYY HH:mm:ss')),
+            (log ? log.latest.author_name : '')
+        );
+
+        return res.json(ApplicationVersion).end();
     }
 }
+
+export {IndexController};

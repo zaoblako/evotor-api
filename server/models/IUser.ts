@@ -1,7 +1,12 @@
 import mongoose = require("mongoose");
 
 interface IUser extends mongoose.Document {
-    email: string;
+    _id: string;
+    username: string,
+    plain: string,
+    password: string,
+    hasBilling: boolean,
+    token: string
 }
 
-export = IUser;
+export {IUser};

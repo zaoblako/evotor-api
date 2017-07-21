@@ -1,17 +1,20 @@
 import * as http from "http";
-import config from "./config/Config";
+import Config from "./config/Config";
 import {ExpressConfig} from "./config/Express";
+import * as winston from 'winston';
 
 const app = new ExpressConfig().config();
 
 const server: http.Server = http.createServer(app);
 
-server.listen(config.port);
+server.listen(Config.port, "0.0.0.0");
+
+let logger = winston.loggers.get('default');
 
 server.on("error", (e: Error) => {
-    console.log("Error starting server" + e);
+    logger.error("Error starting server" + e);
 });
 
 server.on("listening", () => {
-    console.log("[HTTP] Server started on port " + config.port);
+    logger.info("[HTTP] Server started on port " + Config.port);
 });

@@ -15,19 +15,24 @@
     "@types/node": "8.0.14",
     "@types/passport": "0.3.3",
     "body-parser": "1.17.2",
+    "chalk": "^2.0.1",
     "concurrently": "3.5.0",
     "cookie-parser": "1.4.3",
     "debug": "2.6.8",
     "express": "4.15.3",
+    "express-mung": "^0.4.6",
     "glob": "7.1.2",
     "lodash": "4.17.4",
     "moment": "^2.18.1",
     "mongoose": "4.11.3",
     "morgan": "1.8.2",
+    "morgan-body": "^0.10.5",
     "passport": "0.3.2",
     "simple-git": "^1.74.1",
     "ts-node": "3.2.1",
     "typescript": "2.4.2",
-    "typings": "2.1.1"
+    "typings": "2.1.1",
+    "uuid": "^3.1.0",
+    "winston": "^2.3.1"
   }
 }

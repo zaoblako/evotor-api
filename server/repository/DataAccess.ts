@@ -1,9 +1,9 @@
 import Mongoose = require("mongoose");
-import Config = require("./../config/database");
+import {Config} from "./../config/Database";
 
 class DataAccess {
     static mongooseInstance: any;
-    static mongooseConnection: Mongoose.Connection;
+    public static mongooseConnection: Mongoose.Connection;
 
     constructor() {
         DataAccess.connect();
@@ -23,4 +23,4 @@ class DataAccess {
 }
 
 DataAccess.connect();
-export = DataAccess;
+export {DataAccess};

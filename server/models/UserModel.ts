@@ -1,4 +1,4 @@
-import IUser = require('./IUser');
+import {IUser} from './IUser';
 
 class UserModel {
 
@@ -8,11 +8,19 @@ class UserModel {
         this._userModel = userModel;
     }
 
-    get email(): string {
-        return this._userModel.email;
+    get id(): string {
+        return this._userModel._id;
+    }
+
+    get username(): string {
+        return this._userModel.username;
+    }
+
+    get token(): string {
+        return this._userModel.token;
     }
 
 }
 
 Object.seal(UserModel);
-export = UserModel;
+export {UserModel};
