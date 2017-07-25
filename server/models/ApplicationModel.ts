@@ -1,4 +1,4 @@
-import {IApplication} from './IApplication';
+import { IApplication } from './IApplication';
 
 class ApplicationModel {
 
@@ -20,7 +20,11 @@ class ApplicationModel {
         return this._applicationModel.token;
     }
 
+    get productId(): string {
+        return this._applicationModel.productId;
+    }
+
 }
 
 Object.seal(ApplicationModel);
-export {ApplicationModel};
+export { ApplicationModel };
