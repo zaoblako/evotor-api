@@ -24,9 +24,9 @@ class UserController {
      * @param {e.Response} res
      */
     public static verify(req: Request, res: Response) {
-        UserRepository.findOne({_id: req.body.userUuid, username: req.body.username, plain: req.body.password}, (err: Error, user: IUser) => {
+        UserRepository.findOne({_id: req.body.userId, email: req.body.email, plain: req.body.password}, (err: Error, user: IUser) => {
             if (err) {
-                return res.json(err);
+                return res.status(404).json(err);
             }
             else if (!user) {
                 return res.status(404).end();
@@ -37,7 +37,7 @@ class UserController {
                     return res.json({
                         userUuid: user.id,
                         hasBilling: false,
-                        token: user.accessToken
+                        accessToken: user.accessToken
                     });
                 }).catch((err) => {
                     return res.send(err);
@@ -125,12 +125,12 @@ class UserController {
                 token: user.accessToken
             });
         }).catch((err) => {
-
             if (err.code == 11000) {
                 return res.status(409).json({
-                    "errors": [
+                    errors: [
                         {
-                            "code": 2005
+                            code: 2005,
+                            error: err
                         }
                     ]
                 });

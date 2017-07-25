@@ -7,7 +7,7 @@ import * as path from "path";
 import * as winston from 'winston';
 import * as moment from 'moment';
 import * as chalk from 'chalk';
-import * as mung from 'express-mung';
+import * as morganBody from 'morgan-body';
 
 require('events').EventEmitter.prototype._maxListeners = 50000;
 
@@ -68,19 +68,9 @@ export class ExpressConfig {
 
         app.use(cookieParser());
 
-        morgan.token('resbody', function (req) {
-            return {};
-        });
+        app.use(morgan(":fullurl;From: :remote-addr;Remote: :req[X-Real-IP];Host: :req[Host];Method: :method;Url: :url;Time: :response-time ms;Authorization: :req[Authorization];X-Authorization: :req[X-Authorization];User-Agent: :user-agent;Body: :body;Status: :status", {stream: stream}));
 
-        app.use(mung.json(
-            function transform(body, req, res) {
-                morgan.token('resbody', function (req) {
-                    return (body ? "\n" + chalk.green(JSON.stringify(body, null, 2)) : chalk.red(null));
-                });
-            }
-        ));
-
-        app.use(morgan(":fullurl;From: :remote-addr;Remote: :req[X-Real-IP];Host: :req[Host];Method: :method;Url: :url;Time: :response-time ms;Authorization: :req[Authorization];X-Authorization: :req[X-Authorization];User-Agent: :user-agent;Body: :body;Status: :status;Response body: :resbody", {stream: stream}));
+        morganBody(app);
 
         for (let route of Config.globFiles(Config.routes)) {
             require(path.resolve(route)).default(app);
