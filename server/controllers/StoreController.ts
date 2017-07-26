@@ -11,6 +11,7 @@ import {IDocument} from "../models/interface/IDocument";
 import {DocumentRepository} from "../repository/DocumentRepository";
 import {TransactionRepository} from "../repository/TransactionRepository";
 import {ITransaction} from "../models/interface/ITransaction";
+import {StoreEmployeeRepository} from "repository/StoreEmployeeRepository";
 
 
 /**
@@ -327,10 +328,36 @@ class StoreController {
                         patronymicName: employee.patronymicName,
                         phone: employee.phone,
                         role: employee.role
-                    }).then((employee: IEmployee) => {
-                        if (key === (employeesLength - 1)) {
-                            return res.status(200).end();
+                    }).then((e: IEmployee) => {
+                        if (employee.stores && employee.stores.length > 0) {
+                            employee.stores.forEach((emp, empKey) => {
+                                StoreEmployeeRepository.findOne({employeeId: employee.uuid, storeId: emp.storeUuid}, (err, se) => {
+                                    if (err) {
+                                        console.log(err);
+                                        return res.status(400).json(err).end();
+                                    }
+                                    if (!se) {
+                                        StoreEmployeeRepository.create({employeeId: employee.uuid, storeId: emp.storeUuid}).then(() => {
+                                            if (key === (employeesLength - 1) && empKey === (employee.stores.length - 1)) {
+                                                return res.status(200).end();
+                                            }
+                                        }).catch((err) => {
+                                            console.log(err);
+                                            return res.status(400).json(err).end();
+                                        });
+                                    }
+                                    else if (key === (employeesLength - 1)) {
+                                        return res.status(200).end();
+                                    }
+                                });
+                            })
                         }
+                        else {
+                            if (key === (employeesLength - 1)) {
+                                return res.status(200).end();
+                            }
+                        }
+
                     }).catch((err) => {
                         console.log(err);
                         return res.status(400).json(err).end();

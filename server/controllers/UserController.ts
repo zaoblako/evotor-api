@@ -37,7 +37,7 @@ class UserController {
                     return res.json({
                         userUuid: user.id,
                         hasBilling: false,
-                        accessToken: user.accessToken
+                        token: user.accessToken
                     });
                 }).catch((err) => {
                     return res.send(err);

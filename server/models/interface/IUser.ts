@@ -7,6 +7,7 @@ interface IUser extends mongoose.Document {
     password: string,
     accessToken: string,
     hasBilling: boolean,
+    email: string,
     token: string
 }
 

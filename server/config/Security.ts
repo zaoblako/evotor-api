@@ -109,7 +109,7 @@ export class Security {
      */
     protected static checkBearerUserToken(token: string, cb: Function) {
         token = token.replace("Bearer ", "");
-        UserRepository.findOne({token: token}, (err: any, user: IUser) => {
+        UserRepository.findOne({accessToken: token}, (err: any, user: IUser) => {
             if (err) {
                 return console.log(err);
             }
