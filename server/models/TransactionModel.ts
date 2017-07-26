@@ -64,8 +64,8 @@ class TransactionModel {
         return this._transactionModel.paymentType;
     }
 
-    get documentId(): string {
-        return this._transactionModel.documentId;
+    get documentUuid(): string {
+        return this._transactionModel.documentUuid;
     }
 
 }

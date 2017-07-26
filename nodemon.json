@@ -1,7 +1,3 @@
 {
-  "verbose": false,
-  "ext": "js,json",
-  "watch": [
-    "server"
-  ]
+  "verbose": false
 }

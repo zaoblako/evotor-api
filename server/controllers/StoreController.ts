@@ -7,10 +7,10 @@ import {DeviceRepository} from "../repository/DeviceRepository";
 import {IDevice} from "../models/interface/IDevice";
 import {IEmployee} from "../models/interface/IEmployee";
 import {EmployeeRepository} from "../repository/EmployeeRepository";
-import {IDocument} from "models/interface/IDocument";
-import {DocumentRepository} from "repository/DocumentRepository";
-import {TransactionRepository} from "repository/TransactionRepository";
-import {ITransaction} from "models/interface/ITransaction";
+import {IDocument} from "../models/interface/IDocument";
+import {DocumentRepository} from "../repository/DocumentRepository";
+import {TransactionRepository} from "../repository/TransactionRepository";
+import {ITransaction} from "../models/interface/ITransaction";
 
 
 /**

@@ -22,4 +22,5 @@ node_modules
 npm-debug.log
 storage
 tmp
+dist
 package-lock.json

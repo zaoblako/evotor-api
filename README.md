@@ -14,4 +14,4 @@
 
 `DB=mongo://localhost:27017/evotor NODE_ENV=production npm start`
 
-Отладочные логи находятся в `./server/logs/debug.log`
+Отладочные логи находятся в `./dist/logs/debug.log`

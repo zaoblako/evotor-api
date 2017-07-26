@@ -10,8 +10,8 @@ let git = simpleGit(__dirname + '/../');
 let versions = require('../../package.json');
 let log;
 
-logger.info('API Version: ' + versions.version);
-logger.info('Environment: ' + process.env.NODE_ENV);
+logger.info('[API] API Version: ' + versions.version);
+logger.info('[API] Environment: ' + process.env.NODE_ENV);
 
 git.log(function (err, logs) {
     log = logs;
