@@ -16,6 +16,12 @@ class ReceiptItemSchema {
                 type: String,
                 required: true
             },
+            itemType: {
+                type: String
+            },
+            barcode: {
+                type: String
+            },
             measureName: {
                 type: String
             },
