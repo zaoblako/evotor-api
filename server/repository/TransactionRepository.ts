@@ -8,10 +8,6 @@ class TransactionSchema {
 
     static get schema() {
         return mongoose.Schema({
-            id: {
-                type: String,
-                required: true
-            },
             uuid: {
                 type: String,
                 required: true
@@ -52,7 +48,7 @@ class TransactionSchema {
             paymentType: {
                 type: String
             },
-            documentId: {
+            documentUuid: {
                 type: String
             }
         });

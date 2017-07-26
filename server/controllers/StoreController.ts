@@ -7,6 +7,10 @@ import {DeviceRepository} from "../repository/DeviceRepository";
 import {IDevice} from "../models/interface/IDevice";
 import {IEmployee} from "../models/interface/IEmployee";
 import {EmployeeRepository} from "../repository/EmployeeRepository";
+import {IDocument} from "models/interface/IDocument";
+import {DocumentRepository} from "repository/DocumentRepository";
+import {TransactionRepository} from "repository/TransactionRepository";
+import {ITransaction} from "models/interface/ITransaction";
 
 
 /**
@@ -201,7 +205,91 @@ class StoreController {
      * @param {e.Response} res
      */
     public static documents(req: Request, res: Response) {
+        let documents = req.body;
+        let documentsLength = documents.length;
 
+        documents.forEach((document, key) => {
+            DeviceRepository.findOne({uuid: document.uuid}, (err, d: IDocument) => {
+                if (err) {
+                    console.log(err);
+                    return res.status(400).json(err).end();
+                }
+                if (!d) {
+                    DocumentRepository.create({
+                        uuid: document.uuid,
+                        openUserUuid: document.openUserUuid ? document.openUserUuid : null,
+                        type: document.type,
+                        storeUuid: document.storeUuid,
+                        deviceUuid: document.deviceUuid ? document.deviceUuid : null,
+                        version: document.version ? document.version : null,
+                        number: document.number ? document.number : null
+                    }).then((doc: IDocument) => {
+                        let transactionsLength = document.transactions.length;
+                        if (document.transactions && transactionsLength > 0) {
+                            document.transactions.forEach((transaction, transactionKey) => {
+                                transaction.documentUuid = doc.uuid;
+                                TransactionRepository.create(transaction).then((t) => {
+                                    if (key === (documentsLength - 1) && transactionKey === (transactionsLength - 1)) {
+                                        return res.status(200).end();
+                                    }
+                                });
+                            });
+                        }
+                        else if (key === (documentsLength - 1)) {
+                            return res.status(200).end();
+                        }
+                    }).catch((err) => {
+                        console.log(err);
+                        return res.status(400).json(err).end();
+                    });
+                }
+                else {
+                    d.openUserUuid = (document.openUserUuid ? document.openUserUuid : null);
+                    d.type = document.type;
+                    d.storeUuid = (document.storeUuid ? document.storeUuid : null);
+                    d.deviceUuid = (document.deviceUuid ? document.deviceUuid : null);
+                    d.version = (document.version ? document.version : null);
+                    d.number = (document.number ? document.number : null);
+                    d.save().then(() => {
+                        let transactionsLength = document.transactions.length;
+                        if (document.transactions && transactionsLength > 0) {
+                            document.transactions.forEach((transaction, transactionKey) => {
+                                TransactionRepository.findOne({uuid: transaction.uuid}, (err, trans: ITransaction) => {
+                                    if (err) {
+                                        console.log(err);
+                                        return res.status(400).json(err).end();
+                                    }
+                                    transaction.documentUuid = d.uuid;
+                                    if (!trans) {
+                                        TransactionRepository.create(transaction).then((t) => {
+                                            if (key === (documentsLength - 1) && transactionKey === (transactionsLength - 1)) {
+                                                return res.status(200).end();
+                                            }
+                                        });
+                                    }
+                                    else {
+                                        TransactionRepository.update({uuid: trans.uuid}, transaction).then(() => {
+                                            if (key === (documentsLength - 1) && transactionKey === (transactionsLength - 1)) {
+                                                return res.status(200).end();
+                                            }
+                                        }).catch((err) => {
+                                            console.log(err);
+                                            return res.status(400).json(err).end();
+                                        });
+                                    }
+                                });
+                            });
+                        }
+                        if (key === (documentsLength - 1)) {
+                            return res.status(200).end();
+                        }
+                    }).catch((err) => {
+                        console.log(err);
+                        return res.status(400).json(err).end();
+                    });
+                }
+            });
+        });
     }
 
     /**
