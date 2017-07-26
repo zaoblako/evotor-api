@@ -8,7 +8,7 @@ class ReceiptSchema {
 
     static get schema() {
         return mongoose.Schema({
-            uuid: {
+            id: {
                 type: String,
                 required: true
             },

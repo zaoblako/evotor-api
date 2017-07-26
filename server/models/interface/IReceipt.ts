@@ -1,7 +1,7 @@
 import mongoose = require("mongoose");
 
 interface IReceipt extends mongoose.Document {
-    uuid: string,
+    id: string,
     deviceId: string,
     dateTime: number,
     type: string,

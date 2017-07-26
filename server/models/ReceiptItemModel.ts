@@ -48,6 +48,9 @@ class ReceiptItemModel {
         return this._receiptItemModel.discount;
     }
 
+    get receiptId(): string {
+        return this._receiptItemModel.receiptId;
+    }
 }
 
 Object.seal(ReceiptItemModel);

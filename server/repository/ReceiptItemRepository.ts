@@ -39,6 +39,9 @@ class ReceiptItemSchema {
             },
             discount: {
                 type: Number
+            },
+            receiptId: {
+                type: String
             }
         });
     }

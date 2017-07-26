@@ -10,7 +10,8 @@ interface IReceiptItem extends mongoose.Document {
     sumPrice: number,
     tax: number,
     taxPercent: number,
-    discount: number
+    discount: number,
+    receiptId: string
 }
 
-export { IReceiptItem };
+export {IReceiptItem};

@@ -8,8 +8,8 @@ class ReceiptModel {
         this._receiptModel = receiptModel;
     }
 
-    get uuid(): string {
-        return this._receiptModel.uuid;
+    get id(): string {
+        return this._receiptModel.id;
     }
 
     get deviceId(): string {
