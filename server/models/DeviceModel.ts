@@ -1,26 +1,26 @@
-import { IDevice } from './interface/IDevice';
+import {IDevice} from './interface/IDevice';
 
 class DeviceModel {
 
-    private deviceModel: IDevice;
+    private _deviceModel: IDevice;
 
-    constructor(applicationModel: IDevice) {
-        this.deviceModel = applicationModel;
+    constructor(deviceModel: IDevice) {
+        this._deviceModel = deviceModel;
     }
 
     get name(): string {
-        return this.deviceModel.name;
+        return this._deviceModel.name;
     }
 
     get uuid(): string {
-        return this.deviceModel.uuid;
+        return this._deviceModel.uuid;
     }
 
     get storeUuid(): string {
-        return this.deviceModel.storeUuid;
+        return this._deviceModel.storeUuid;
     }
 
 }
 
 Object.seal(DeviceModel);
-export { DeviceModel };
+export {DeviceModel};

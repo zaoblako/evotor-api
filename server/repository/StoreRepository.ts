@@ -8,7 +8,7 @@ class StoreSchema {
 
     static get schema() {
         return mongoose.Schema({
-            _id: {
+            uuid: {
                 type: String,
                 required: true
             },

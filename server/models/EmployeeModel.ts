@@ -1,4 +1,4 @@
-import { IEmployee } from './interface/IEmployee';
+import {IEmployee} from './interface/IEmployee';
 
 class EmployeeModel {
 
@@ -35,4 +35,4 @@ class EmployeeModel {
 }
 
 Object.seal(EmployeeModel);
-export { EmployeeModel };
+export {EmployeeModel};

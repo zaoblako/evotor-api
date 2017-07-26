@@ -1,11 +1,11 @@
-import { IEvent } from './interface/IEvent';
+import {IEvent} from './interface/IEvent';
 
 class EventModel {
 
     private _eventModel: IEvent;
 
-    constructor(employeeModel: IEvent) {
-        this._eventModel = employeeModel;
+    constructor(eventModel: IEvent) {
+        this._eventModel = eventModel;
     }
 
     get subscriptionId(): string {
@@ -46,4 +46,4 @@ class EventModel {
 }
 
 Object.seal(EventModel);
-export { EventModel };
+export {EventModel};

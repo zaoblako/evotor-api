@@ -8,8 +8,8 @@ class StoreModel {
         this._storeModel = storeModel;
     }
 
-    get id(): string {
-        return this._storeModel._id;
+    get uuid(): string {
+        return this._storeModel.uuid;
     }
 
     get name(): string {

@@ -1,11 +1,11 @@
-import { IDocument } from './interface/IDocument';
+import {IDocument} from './interface/IDocument';
 
 class DocumentModel {
 
     private _documentModel: IDocument;
 
-    constructor(applicationModel: IDocument) {
-        this._documentModel = applicationModel;
+    constructor(documentModel: IDocument) {
+        this._documentModel = documentModel;
     }
 
     get openUserUuid(): string {
@@ -39,4 +39,4 @@ class DocumentModel {
 }
 
 Object.seal(DocumentModel);
-export { DocumentModel };
+export {DocumentModel};

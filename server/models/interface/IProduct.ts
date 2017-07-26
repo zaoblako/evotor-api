@@ -19,7 +19,8 @@ interface IProduct extends mongoose.Document {
     type: string,
     alcoholByVolume: number,
     alcoholProductKindCode: number,
-    tareVolume: number
+    tareVolume: number,
+    storeUuid: string
 }
 
 export {IProduct};

@@ -67,6 +67,9 @@ class ProductSchema {
             },
             tareVolume: {
                 type: Number
+            },
+            storeUuid: {
+                type: String
             }
         });
     }

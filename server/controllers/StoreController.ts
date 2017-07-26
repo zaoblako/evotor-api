@@ -1,9 +1,16 @@
 import {Request, Response} from 'express';
 import {StoreRepository} from "../repository/StoreRepository";
 import {IStore} from "../models/interface/IStore";
+import {ProductRepository} from "../repository/ProductRepository";
+import {IProduct} from "../models/interface/IProduct";
+import {DeviceRepository} from "../repository/DeviceRepository";
+import {IDevice} from "../models/interface/IDevice";
+import {IEmployee} from "../models/interface/IEmployee";
+import {EmployeeRepository} from "../repository/EmployeeRepository";
+
 
 /**
- * @class StoreController
+ * @class EventController
  */
 class StoreController {
 
@@ -25,32 +32,239 @@ class StoreController {
      */
     public static create(req: Request, res: Response) {
 
-        StoreRepository.findOne({_id: req.body.uuid}, (err, store: IStore) => {
-            if (err) {
-                return console.log(err);
-            }
-            if (!store) {
-                StoreRepository.create({
-                    _id: req.body.uuid,
-                    name: req.body.name,
-                    address: req.body.address
-                }).then((store: IStore) => {
-                    return res.status(200).end();
-                }).catch((err) => {
+        let stores = req.body;
+        let storesLength = stores.length;
+
+        stores.forEach((store, key) => {
+            StoreRepository.findOne({uuid: store.uuid}, (err, s: IStore) => {
+                if (err) {
                     console.log(err);
-                    return res.json({}).end();
-                });
-            }
-            else {
-                store.name = req.body.name;
-                store.address = req.body.address;
-                store.save().then(() => {
-                    return res.status(200).end();
-                }).catch((err) => {
+                    return res.status(400).json(err).end();
+                }
+                if (!s) {
+                    StoreRepository.create({
+                        uuid: store.uuid,
+                        name: store.name,
+                        address: store.address
+                    }).then((store: IStore) => {
+                        if (key === (storesLength - 1)) {
+                            return res.status(200).end();
+                        }
+                    }).catch((err) => {
+                        console.log(err);
+                        return res.status(400).json(err).end();
+                    });
+                }
+                else {
+                    s.name = store.name;
+                    s.address = store.address;
+                    s.save().then(() => {
+                        if (key === (storesLength - 1)) {
+                            return res.status(200).end();
+                        }
+                    }).catch((err) => {
+                        console.log(err);
+                        return res.status(400).json(err).end();
+                    });
+                }
+            });
+        });
+    }
+
+    /**
+     * Создать товары
+     *
+     * @headers Authorization
+     * @query storeUuid
+     *
+     * @error 400 Ошибка в запросе
+     * @error 401 Неверный токен
+     * @error 402 Требуется оплата
+     * @error 404 Отсутствует указанный ресурс
+     * @error 405 Терминал неактивен
+     *
+     * @return 200 OK
+     *
+     * @param {e.Request} req
+     * @param {e.Response} res
+     */
+    public static products(req: Request, res: Response) {
+
+        let storeUuid = req.params.storeUuid;
+
+        let products = req.body;
+        let productLength = products.length;
+
+        products.forEach((product, key) => {
+            product.storeUuid = storeUuid;
+            ProductRepository.findOne({uuid: product.uuid}, (err, p: IProduct) => {
+                if (err) {
                     console.log(err);
-                    return res.json({}).end();
-                });
-            }
+                    return res.status(400).json(err).end();
+                }
+                if (!p) {
+                    ProductRepository.create(product).then(() => {
+                        if (key === (productLength - 1)) {
+                            return res.status(200).end();
+                        }
+                    }).catch((err) => {
+                        console.log(err);
+                        return res.status(400).json(err).end();
+                    });
+                }
+                else {
+                    ProductRepository.update({uuid: product.uuid}, product).then(() => {
+                        if (key === (productLength - 1)) {
+                            return res.status(200).end();
+                        }
+                    }).catch((err) => {
+                        console.log(err);
+                        return res.status(400).json(err).end();
+                    });
+                }
+            });
+        });
+    }
+
+    /**
+     * Создать смарт-терминал
+     *
+     * @headers Authorization
+     *
+     * @error 400 Ошибка в запросе
+     * @error 401 Неверный токен
+     * @error 402 Требуется оплата
+     * @error 404 Отсутствует указанный ресурс
+     * @error 405 Терминал неактивен
+     *
+     * @return 200 OK
+     *
+     * @param {e.Request} req
+     * @param {e.Response} res
+     */
+    public static devices(req: Request, res: Response) {
+
+        let devices = req.body;
+        let devicesLength = devices.length;
+
+        devices.forEach((device, key) => {
+            DeviceRepository.findOne({uuid: device.uuid}, (err, d: IDevice) => {
+                if (err) {
+                    console.log(err);
+                    return res.status(400).json(err).end();
+                }
+                if (!d) {
+                    DeviceRepository.create({
+                        uuid: device.uuid,
+                        name: device.name,
+                        storeUuid: device.storeUuid
+                    }).then((device: IDevice) => {
+                        if (key === (devicesLength - 1)) {
+                            return res.status(200).end();
+                        }
+                    }).catch((err) => {
+                        console.log(err);
+                        return res.status(400).json(err).end();
+                    });
+                }
+                else {
+                    d.name = device.name;
+                    d.storeUuid = device.storeUuid;
+                    d.save().then(() => {
+                        if (key === (devicesLength - 1)) {
+                            return res.status(200).end();
+                        }
+                    }).catch((err) => {
+                        console.log(err);
+                        return res.status(400).json(err).end();
+                    });
+                }
+            });
+        });
+    }
+
+    /**
+     * Передать документы
+     *
+     * @headers Authorization
+     * @query storeUuid
+     *
+     * @error 400 Ошибка в запросе
+     * @error 401 Неверный токен
+     * @error 402 Требуется оплата
+     * @error 404 Отсутствует указанный ресурс
+     * @error 405 Терминал неактивен
+     *
+     * @return 200 OK
+     *
+     * @param {e.Request} req
+     * @param {e.Response} res
+     */
+    public static documents(req: Request, res: Response) {
+
+    }
+
+    /**
+     * Создать сотрудника
+     *
+     * @headers Authorization
+     *
+     * @error 400 Ошибка в запросе
+     * @error 401 Неверный токен
+     * @error 402 Требуется оплата
+     * @error 404 Отсутствует указанный ресурс
+     * @error 405 Терминал неактивен
+     *
+     * @return 200 OK
+     *
+     * @param {e.Request} req
+     * @param {e.Response} res
+     */
+    public static employees(req: Request, res: Response) {
+
+        let employees = req.body;
+        let employeesLength = employees.length;
+
+        employees.forEach((employee, key) => {
+            EmployeeRepository.findOne({uuid: employee.uuid}, (err, e: IEmployee) => {
+                if (err) {
+                    console.log(err);
+                    return res.status(400).json(err).end();
+                }
+                if (!e) {
+                    EmployeeRepository.create({
+                        uuid: employee.uuid,
+                        name: employee.name,
+                        lastName: employee.lastName,
+                        patronymicName: employee.patronymicName,
+                        phone: employee.phone,
+                        role: employee.role
+                    }).then((employee: IEmployee) => {
+                        if (key === (employeesLength - 1)) {
+                            return res.status(200).end();
+                        }
+                    }).catch((err) => {
+                        console.log(err);
+                        return res.status(400).json(err).end();
+                    });
+                }
+                else {
+                    e.name = employee.name;
+                    e.uuid = employee.uuid;
+                    e.lastName = employee.lastName;
+                    e.patronymicName = employee.patronymicName;
+                    e.phone = employee.phone;
+                    e.role = employee.role;
+                    e.save().then(() => {
+                        if (key === (employeesLength - 1)) {
+                            return res.status(200).end();
+                        }
+                    }).catch((err) => {
+                        console.log(err);
+                        return res.status(400).json(err).end();
+                    });
+                }
+            });
         });
     }
 }

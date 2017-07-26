@@ -1,4 +1,4 @@
-import { IReceiptItem } from './interface/IReceiptItem';
+import {IReceiptItem} from './interface/IReceiptItem';
 
 class ReceiptItemModel {
 
@@ -51,4 +51,4 @@ class ReceiptItemModel {
 }
 
 Object.seal(ReceiptItemModel);
-export { ReceiptItemModel };
+export {ReceiptItemModel};
