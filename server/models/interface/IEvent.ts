@@ -1,15 +1,15 @@
 import mongoose = require("mongoose");
 
 interface IEvent extends mongoose.Document {
-    subscriptionId: string,
+    purchaseOrderId: string,
     productId: string,
     userId: string,
-    timestamp: number,
+    timestamp: string,
     sequenceNumber: number,
     type: string,
     planId: string,
-    trialPeriodDuration: string,
+    trialPeriod: string,
     deviceNumber: number
 }
 
-export { IEvent };
+export {IEvent};

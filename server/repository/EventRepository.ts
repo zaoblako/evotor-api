@@ -11,7 +11,7 @@ class EventSchema {
 
     static get schema() {
         return mongoose.Schema({
-            subscriptionId: {
+            purchaseOrderId: {
                 type: String,
                 required: true
             },
@@ -24,7 +24,7 @@ class EventSchema {
                 required: true
             },
             timestamp: {
-                type: Number
+                type: String
             },
             sequenceNumber: {
                 type: Number
@@ -35,7 +35,7 @@ class EventSchema {
             planId: {
                 type: String
             },
-            trialPeriodDuration: {
+            trialPeriod: {
                 type: String
             },
             deviceNumber: {

@@ -9,7 +9,7 @@ class EventModel {
     }
 
     get subscriptionId(): string {
-        return this._eventModel.subscriptionId;
+        return this._eventModel.purchaseOrderId;
     }
 
     get productId(): string {
@@ -20,7 +20,7 @@ class EventModel {
         return this._eventModel.userId;
     }
 
-    get timestamp(): number {
+    get timestamp(): string {
         return this._eventModel.timestamp;
     }
 
@@ -37,7 +37,7 @@ class EventModel {
     }
 
     get trialPeriodDuration(): string {
-        return this._eventModel.trialPeriodDuration;
+        return this._eventModel.trialPeriod;
     }
 
     get deviceNumber(): number {

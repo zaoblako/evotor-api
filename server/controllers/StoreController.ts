@@ -11,7 +11,7 @@ import {IDocument} from "../models/interface/IDocument";
 import {DocumentRepository} from "../repository/DocumentRepository";
 import {TransactionRepository} from "../repository/TransactionRepository";
 import {ITransaction} from "../models/interface/ITransaction";
-import {StoreEmployeeRepository} from "repository/StoreEmployeeRepository";
+import {StoreEmployeeRepository} from "../repository/StoreEmployeeRepository";
 
 
 /**
