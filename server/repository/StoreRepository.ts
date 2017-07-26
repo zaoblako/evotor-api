@@ -1,5 +1,5 @@
 import {DataAccess} from './DataAccess';
-import {IStore} from "../models/IStore";
+import {IStore} from "../models/interface/IStore";
 
 let mongoose = DataAccess.mongooseInstance;
 let mongooseConnection = DataAccess.mongooseConnection;
@@ -22,5 +22,5 @@ class StoreSchema {
     }
 }
 
-let StoreRepository = mongooseConnection.model<IStore>("User", StoreSchema.schema, 'store');
+let StoreRepository = mongooseConnection.model<IStore>("Store", StoreSchema.schema, 'store');
 export {StoreRepository};

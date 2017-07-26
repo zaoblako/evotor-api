@@ -1,41 +1,35 @@
 import {DataAccess} from './DataAccess';
-import {IUser} from "../models/interface/IUser";
+import {IEmployee} from '../models/interface/IEmployee';
 
 let mongoose = DataAccess.mongooseInstance;
 let mongooseConnection = DataAccess.mongooseConnection;
 
-class UserSchema {
+class EmployeeSchema {
 
     static get schema() {
         return mongoose.Schema({
-            _id: {
+            uuid: {
                 type: String,
                 required: true
             },
-            plain: {
+            name: {
                 type: String
             },
-            username: {
+            lastName: {
                 type: String
             },
-            email: {
+            patronymicName: {
                 type: String
             },
-            password: {
+            phone: {
                 type: String
             },
-            hasBilling: {
-                type: Boolean
-            },
-            token: {
-                type: String
-            },
-            accessToken: {
+            role: {
                 type: String
             }
         });
     }
 }
 
-let UserRepository = mongooseConnection.model<IUser>("User", UserSchema.schema, 'user');
-export {UserRepository};
+let EmployeeRepository = mongooseConnection.model<IEmployee>("Employee", EmployeeSchema.schema, 'employee');
+export {EmployeeRepository};

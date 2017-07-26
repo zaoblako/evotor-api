@@ -1,5 +1,5 @@
 import {DataAccess} from './DataAccess';
-import {IApplication} from "../models/IApplication";
+import {IApplication} from "../models/interface/IApplication";
 
 let mongoose = DataAccess.mongooseInstance;
 let mongooseConnection = DataAccess.mongooseConnection;

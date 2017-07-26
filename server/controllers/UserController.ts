@@ -1,6 +1,6 @@
 import {Request, Response} from 'express';
 import {UserRepository} from "../repository/UserRepository";
-import {IUser} from "../models/IUser";
+import {IUser} from "../models/interface/IUser";
 import * as uuid from "uuid/v4";
 
 /**

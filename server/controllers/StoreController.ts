@@ -1,6 +1,6 @@
 import {Request, Response} from 'express';
 import {StoreRepository} from "../repository/StoreRepository";
-import {IStore} from "../models/IStore";
+import {IStore} from "../models/interface/IStore";
 
 /**
  * @class StoreController

@@ -1,4 +1,4 @@
-import {IStore} from './IStore';
+import {IStore} from './interface/IStore';
 
 class StoreModel {
 

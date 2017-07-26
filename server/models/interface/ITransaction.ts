@@ -1,9 +1,9 @@
 import mongoose = require("mongoose");
 
 interface ITransaction extends mongoose.Document {
-    type: string,
-    uuid: string,
     id: string,
+    uuid: string,
+    type: string,
     userCode: string,
     userUuid: string,
     creationDate: number,
@@ -18,4 +18,4 @@ interface ITransaction extends mongoose.Document {
     documentId: string
 }
 
-export { ITransaction };
+export {ITransaction};

@@ -1,4 +1,4 @@
-import { IDocument } from './IDocument';
+import { IDocument } from './interface/IDocument';
 
 class DocumentModel {
 

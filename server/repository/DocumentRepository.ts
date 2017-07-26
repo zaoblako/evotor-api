@@ -1,41 +1,38 @@
 import {DataAccess} from './DataAccess';
-import {IUser} from "../models/interface/IUser";
+import {IDocument} from '../models/interface/IDocument';
 
 let mongoose = DataAccess.mongooseInstance;
 let mongooseConnection = DataAccess.mongooseConnection;
 
-class UserSchema {
+class DocumentSchema {
 
     static get schema() {
         return mongoose.Schema({
-            _id: {
+            uuid: {
                 type: String,
                 required: true
             },
-            plain: {
+            openUserUuid: {
                 type: String
             },
-            username: {
+            deviceUuid: {
                 type: String
             },
-            email: {
+            version: {
                 type: String
             },
-            password: {
+            number: {
+                type: Number
+            },
+            storeUuid: {
                 type: String
             },
-            hasBilling: {
-                type: Boolean
-            },
-            token: {
-                type: String
-            },
-            accessToken: {
+            type: {
                 type: String
             }
         });
     }
 }
 
-let UserRepository = mongooseConnection.model<IUser>("User", UserSchema.schema, 'user');
-export {UserRepository};
+let DocumentRepository = mongooseConnection.model<IDocument>("Document", DocumentSchema.schema, 'document');
+export {DocumentRepository};

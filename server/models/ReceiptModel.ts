@@ -1,4 +1,4 @@
-import { IReceipt } from './IReceipt';
+import { IReceipt } from './interface/IReceipt';
 
 class ReceiptModel {
 

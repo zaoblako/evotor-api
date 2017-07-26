@@ -1,4 +1,4 @@
-import { IDevice } from './IDevice';
+import { IDevice } from './interface/IDevice';
 
 class DeviceModel {
 
