@@ -1,4 +1,5 @@
 import {Request, Response} from 'express';
+import {EventRepository} from "../repository/EventRepository";
 
 /**
  * @class EventController
@@ -19,7 +20,14 @@ class EventController {
      */
     public static create(req: Request, res: Response) {
 
-        /* TODO 26.07.17 13:45 alterant: Implement method */
+        let event = req.body;
+
+        EventRepository.create(event).then(() => {
+            return res.status(200).end();
+        }).catch((err) => {
+            console.log(err);
+            return res.status(400).json(err).end();
+        });
 
     }
 }
