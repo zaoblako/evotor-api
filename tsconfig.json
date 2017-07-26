@@ -16,9 +16,10 @@
     ]
   },
   "include": [
-    "server/**/*"
+    "server/**/*.ts"
   ],
   "exclude": [
+    "./**/*.json",
     "node_modules",
     "typings/**/*"
   ]
