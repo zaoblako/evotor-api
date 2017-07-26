@@ -12,10 +12,6 @@ class ApplicationModel {
         return this._applicationModel.name;
     }
 
-    get systemId(): string {
-        return this._applicationModel.systemId;
-    }
-
     get token(): string {
         return this._applicationModel.token;
     }

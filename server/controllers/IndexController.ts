@@ -45,7 +45,7 @@ class IndexController {
             (log ? log.latest.author_name : '')
         );
 
-        return res.json(ApplicationVersion).end();
+        res.json(ApplicationVersion);
     }
 }
 

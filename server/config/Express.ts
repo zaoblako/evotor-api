@@ -66,11 +66,13 @@ export class ExpressConfig {
 
         app.use(bodyParser.json());
 
+        if (process.env.NODE_ENV !== "production") {
+            morganBody(app);
+        }
+
         app.use(cookieParser());
 
         app.use(morgan(":fullurl;From: :remote-addr;Remote: :req[X-Real-IP];Host: :req[Host];Method: :method;Url: :url;Time: :response-time ms;Authorization: :req[Authorization];X-Authorization: :req[X-Authorization];User-Agent: :user-agent;Body: :body;Status: :status", {stream: stream}));
-
-        morganBody(app);
 
         for (let route of Config.globFiles(Config.routes)) {
             require(path.resolve(route)).default(app);
