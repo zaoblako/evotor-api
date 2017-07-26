@@ -15,7 +15,6 @@
     "@types/passport": "0.3.3",
     "body-parser": "1.17.2",
     "chalk": "^2.0.1",
-    "concurrently": "3.5.0",
     "cookie-parser": "1.4.3",
     "debug": "2.6.8",
     "express": "4.15.3",
